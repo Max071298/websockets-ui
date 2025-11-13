@@ -12,6 +12,7 @@
   "keywords": [],
   "license": "ISC",
   "devDependencies": {
+    "@types/ws": "^8.18.1",
     "@typescript-eslint/eslint-plugin": "^8.46.4",
     "@typescript-eslint/parser": "^8.46.4",
     "cross-env": "^10.1.0",
