@@ -45,3 +45,9 @@ type RandomAttack = {
 };
 
 export type IncomingData = '' | LoginPlayer | AddUserToRoom | AddShips | Attack | RandomAttack;
+
+export type IncomingDataMessage = {
+  type: IncomingMessageType;
+  data: IncomingData;
+  id: 0;
+};
