@@ -1,4 +1,4 @@
-type Client = {
+export type Client = {
   login: string;
   password: string;
   isLogged: boolean;

@@ -44,7 +44,7 @@ type RandomAttack = {
   indexPlayer: number | string;
 };
 
-export type IncomingData = '' | LoginPlayer | AddUserToRoom | AddShips | Attack | RandomAttack;
+export type IncomingData = '' & LoginPlayer & AddUserToRoom & AddShips & Attack & RandomAttack;
 
 export type IncomingDataMessage = {
   type: IncomingMessageType;

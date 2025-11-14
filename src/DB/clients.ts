@@ -1,4 +1,6 @@
-class Clients {
+import { Client } from '../types/DBTypes';
+
+export class Clients {
   _clients: Client[] = [];
 
   getClients(): Client[] {
@@ -10,7 +12,7 @@ class Clients {
       login,
       password,
       isLogged: true,
-      index: '123',
+      index: crypto.randomUUID(),
     };
     this._clients.push(newClient);
   }
@@ -18,6 +20,18 @@ class Clients {
   getClient(login: string): Client | undefined {
     return this._clients.find((item) => item.login === login);
   }
-}
 
-export const clientsDB = new Clients();
+  checkPassword(login: string, basePassword: string): boolean {
+    const client = this.getClient(login);
+    if (client) {
+      return client.password === basePassword ? true : false;
+    } else {
+      return false;
+    }
+  }
+
+  isLogged(login: string): boolean {
+    const client = this.getClient(login);
+    return client ? client.isLogged : false;
+  }
+}
