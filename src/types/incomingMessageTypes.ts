@@ -13,11 +13,11 @@ type LoginPlayer = {
 };
 
 type AddUserToRoom = {
-  indexRoom: number | string;
+  indexRoom: string;
 };
 
 type AddShips = {
-  gameId: number | string;
+  gameId: string;
   ships: [
     {
       position: {
@@ -29,19 +29,19 @@ type AddShips = {
       type: 'small' | 'medium' | 'large' | 'huge';
     },
   ];
-  indexPlayer: number | string;
+  indexPlayer: string;
 };
 
 type Attack = {
-  gameId: number | string;
+  gameId: string;
   x: number;
   y: number;
-  indexPlayer: number | string;
+  indexPlayer: string;
 };
 
 type RandomAttack = {
-  gameId: number | string;
-  indexPlayer: number | string;
+  gameId: string;
+  indexPlayer: string;
 };
 
 export type IncomingData = '' & LoginPlayer & AddUserToRoom & AddShips & Attack & RandomAttack;
