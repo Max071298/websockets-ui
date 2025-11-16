@@ -35,8 +35,33 @@ export class Games {
       const gamePlayers = game.players;
       const currentPlayer = gamePlayers.find((player) => player.index === playerId);
       if (currentPlayer) {
+        currentPlayer.killedShips = 0;
         currentPlayer.ships = ships;
+        currentPlayer.shipsMatrix = this.addShipsMatrix(ships);
+        currentPlayer.attackedFields = Array.from({ length: 10 }, (_) => {
+          return Array.from({ length: 10 }, () => 'O');
+        });
       }
     }
+  }
+
+  addShipsMatrix(ships: Ship[]): ('O' | 'X')[][] {
+    const shipsMatrix: ('O' | 'X')[][] = Array.from({ length: 10 }, (_) => {
+      return Array.from({ length: 10 }, () => 'O');
+    });
+
+    ships.forEach((ship) => {
+      const x = ship.position.x;
+      const y = ship.position.y;
+      for (let i = 0; i < ship.length; i++) {
+        if (ship.direction) {
+          shipsMatrix[x][y + i] = 'X';
+        } else {
+          shipsMatrix[x + i][y] = 'X';
+        }
+      }
+    });
+
+    return shipsMatrix;
   }
 }

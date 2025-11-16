@@ -6,7 +6,8 @@ import { extendedWS } from '../types/extendedWS';
 import { Rooms } from '../DB/rooms';
 import { addSecondUserToRoom, createRoom, updateRooms } from './roomsActions';
 import { Games } from '../DB/games';
-import { addShips, createGame, startGame } from './gamesActions';
+import { addShips, createGame, makeAttack, sendWinners, startGame, turn } from './gamesActions';
+import { Winners } from '../DB/winners';
 
 export class MyWebSocketServer {
   _wss: WebSocketServer | undefined;
@@ -14,6 +15,7 @@ export class MyWebSocketServer {
   _clients: Clients | undefined;
   _rooms: Rooms | undefined;
   _games: Games | undefined;
+  _winners: Winners | undefined;
   port: number;
 
   constructor(port: number) {
@@ -26,6 +28,7 @@ export class MyWebSocketServer {
     this._clients = new Clients();
     this._rooms = new Rooms();
     this._games = new Games();
+    this._winners = new Winners();
     this._wss.on('connection', this.handleConnection.bind(this));
   }
 
@@ -47,6 +50,7 @@ export class MyWebSocketServer {
         case IncomingMessageType.Registration:
           loginClient(parsedBody, ws, this._clients as Clients);
           updateRooms(this._websockets, this._rooms);
+          sendWinners(this._websockets, this._winners);
           break;
 
         case IncomingMessageType.CreateRoom:
@@ -62,6 +66,11 @@ export class MyWebSocketServer {
         case IncomingMessageType.AddShips:
           addShips(parsedBody, this._games);
           startGame(parsedBody, this._games, this._websockets);
+          turn(parsedBody, this._games, this._websockets);
+          break;
+        case IncomingMessageType.Attack:
+          makeAttack(parsedBody, this._games, this._websockets, this._clients, this._winners);
+          sendWinners(this._websockets, this._winners);
       }
     });
   }

@@ -14,20 +14,19 @@ export type Room = {
   status: 'open' | 'closed';
 };
 
+export type PlayerInfo = {
+  login: string;
+  index: string;
+  ships?: Ship[];
+  shipsMatrix?: ('O' | 'X')[][];
+  attackedFields?: ('O' | 'X')[][];
+  turn?: boolean;
+  killedShips?: number;
+};
+
 export type Game = {
   gameId: string;
-  players: [
-    {
-      login: string;
-      index: string;
-      ships?: Ship[];
-    },
-    {
-      login: string;
-      index: string;
-      ships?: Ship[];
-    },
-  ];
+  players: [PlayerInfo, PlayerInfo];
 };
 
 export type Ship = {
@@ -38,4 +37,9 @@ export type Ship = {
   direction: boolean; // horizontal - false; vertical - true
   length: number;
   type: 'small' | 'medium' | 'large' | 'huge';
+};
+
+export type Winner = {
+  name: string;
+  wins: number;
 };

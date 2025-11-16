@@ -21,6 +21,10 @@ export class Clients {
     return this._clients.find((item) => item.login === login);
   }
 
+  getClientById(index: string): Client | undefined {
+    return this._clients.find((item) => item.index === index);
+  }
+
   checkPassword(login: string, basePassword: string): boolean {
     const client = this.getClient(login);
     if (client) {
