@@ -13,3 +13,29 @@ export type Room = {
   indexRoom: string;
   status: 'open' | 'closed';
 };
+
+export type Game = {
+  gameId: string;
+  players: [
+    {
+      login: string;
+      index: string;
+      ships?: Ship[];
+    },
+    {
+      login: string;
+      index: string;
+      ships?: Ship[];
+    },
+  ];
+};
+
+export type Ship = {
+  position: {
+    x: number;
+    y: number;
+  };
+  direction: boolean; // horizontal - false; vertical - true
+  length: number;
+  type: 'small' | 'medium' | 'large' | 'huge';
+};
