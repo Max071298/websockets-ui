@@ -73,5 +73,12 @@ export class MyWebSocketServer {
           sendWinners(this._websockets, this._winners);
       }
     });
+
+    ws.on('close', () => {
+      if (this._clients && ws.index) {
+        const client = this._clients.getClientById(ws.index);
+        if (client) client.isLogged = false;
+      }
+    });
   }
 }
